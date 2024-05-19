@@ -1,0 +1,8 @@
+{
+    "project_name": "Your Plugin Name",
+    "__project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "__project_pascal": "{{ cookiecutter.project_name|title|replace(' ', '') }}",
+    "description": "Your Plugin Description",
+    "author": "Your Name",
+    "__namespace": "{{ cookiecutter.author|title|replace(' ', '') }}"
+}
