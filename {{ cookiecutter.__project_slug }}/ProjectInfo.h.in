@@ -1,6 +1,6 @@
 #pragma once
 
-namespace {{ cookiecutter.__namespace }} {
+namespace {{ cookiecutter.namespace }} {
 struct ProjectInfo
 {
     static const char* const  projectName;
@@ -14,4 +14,4 @@ const char* const ProjectInfo::companyName = "@PROJECT_COMPANY@";
 const char* const ProjectInfo::versionString = "@PROJECT_VERSION_STRING@";
 const int ProjectInfo::versionNumber = @PROJECT_VERSION_NUMBER@;
 
-} // namespace {{ cookiecutter.__namespace }}
+} // namespace {{ cookiecutter.namespace }}

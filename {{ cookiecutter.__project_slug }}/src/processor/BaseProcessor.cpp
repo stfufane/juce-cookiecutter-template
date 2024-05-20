@@ -1,6 +1,7 @@
 #include "BaseProcessor.h"
+#include "Params.h"
 
-namespace {{ cookiecutter.__namespace }}::Processor {
+namespace {{ cookiecutter.namespace }}::Processor {
 
 //==============================================================================
 BaseProcessor::BaseProcessor()
@@ -119,17 +120,22 @@ juce::AudioProcessorEditor* BaseProcessor::createEditor()
 //==============================================================================
 void BaseProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused (destData);
+    juce::XmlElement xml("PluginState");
+    for (const auto& param : getParameters()) {
+        xml.setAttribute(getParamID(param), param->getValue());
+    }
+    copyXmlToBinary(xml, destData);
 }
 
 void BaseProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-    juce::ignoreUnused (data, sizeInBytes);
+    auto xml = getXmlFromBinary(data, sizeInBytes);
+    if (!xml) {
+        return;
+    }
+    for (auto& param: getParameters()) {
+        param->setValueNotifyingHost(static_cast<float>(xml->getDoubleAttribute(getParamID(param), param->getValue())));
+    }
 }
 
-} // namespace {{ cookiecutter.__namespace }}::Processor
+} // namespace {{ cookiecutter.namespace }}::Processor

@@ -4,7 +4,7 @@
 #include "BaseProcessor.h"
 #include "Params.h"
 
-namespace {{ cookiecutter.__namespace }}::Processor {
+namespace {{ cookiecutter.namespace }}::Processor {
 
 //==============================================================================
 class {{ cookiecutter.__project_pascal }}AudioProcessor final : public BaseProcessor
@@ -12,19 +12,20 @@ class {{ cookiecutter.__project_pascal }}AudioProcessor final : public BaseProce
 public:
     {{ cookiecutter.__project_pascal }}AudioProcessor();
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
-    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void prepareToPlay (double sampleRate, int samplesPerBlock) final;
+    void releaseResources() final;
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) final;
+    {% if cookiecutter.include_gui_example %}
+    juce::AudioProcessorEditor* createEditor() final;
+    {% endif %}
+    const Params& getParams() const noexcept { return mParams; }
 
-    //==============================================================================
-    // By default a generic editor is used in BaseProcessor. Uncomment this to use a custom editor.
-    // juce::AudioProcessorEditor* createEditor() override;
 private:
     //==============================================================================
-    {{ cookiecutter.__namespace }}::Processor::Params params;
+    Params mParams;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR ({{ cookiecutter.__project_pascal }}AudioProcessor)
 };
 
-} // namespace {{ cookiecutter.__namespace }}::Processor
+} // namespace {{ cookiecutter.namespace }}::Processor

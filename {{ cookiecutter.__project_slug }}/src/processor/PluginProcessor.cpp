@@ -1,11 +1,15 @@
 #include "PluginProcessor.h"
+{%- if cookiecutter.include_ear_protection %}
 #include "Utils.h"
-// #include "gui/PluginEditor.h"
+{%- endif -%}
+{% if cookiecutter.include_gui_example %}
+#include "gui/PluginEditor.h"
+{%- endif %}
 
-namespace {{ cookiecutter.__namespace }}::Processor {
+namespace {{ cookiecutter.namespace }}::Processor {
 
 {{ cookiecutter.__project_pascal }}AudioProcessor::{{ cookiecutter.__project_pascal }}AudioProcessor() 
-    : params(*this) 
+    : mParams(*this) 
     {}
 
 //==============================================================================
@@ -25,7 +29,8 @@ void {{ cookiecutter.__project_pascal }}AudioProcessor::processBlock (juce::Audi
     const auto totalNumInputChannels  = getTotalNumInputChannels();
     const auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    if (!params.active->get()) {
+    // Don't process if the plugin is inactive.
+    if (!mParams.active->get()) {
         buffer.clear();
         return;
     }
@@ -34,28 +39,27 @@ void {{ cookiecutter.__project_pascal }}AudioProcessor::processBlock (juce::Audi
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
         buffer.clear (i, 0, buffer.getNumSamples());
     }
-
+{% if cookiecutter.include_ear_protection %}
     #ifdef JUCE_DEBUG
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        {{ cookiecutter.__namespace }}::Utils::protectYourEars(buffer.getWritePointer (channel), buffer.getNumSamples());
+        {{ cookiecutter.namespace }}::Utils::protectYourEars(buffer.getWritePointer (channel), buffer.getNumSamples());
     }
     #endif
-
-    buffer.applyGain(params.gain->get());
+{% endif %}
+    // Apply gain.
+    buffer.applyGain(mParams.gain->get());
 }
-
-//==============================================================================
-// juce::AudioProcessorEditor* {{ cookiecutter.__project_pascal }}AudioProcessor::createEditor()
-// {
-//     return new {{ cookiecutter.__namespace }}::Gui::{{ cookiecutter.__project_pascal }}AudioProcessorEditor (*this);
-// }
-
-} // namespace {{ cookiecutter.__namespace }}::Processor
+{% if cookiecutter.include_gui_example %}
+juce::AudioProcessorEditor* {{ cookiecutter.__project_pascal }}AudioProcessor::createEditor() {
+    return new {{ cookiecutter.namespace }}::Gui::{{ cookiecutter.__project_pascal }}AudioProcessorEditor (*this);
+}
+{% endif %}
+} // namespace {{ cookiecutter.namespace }}::Processor
 
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new {{ cookiecutter.__namespace }}::Processor::{{ cookiecutter.__project_pascal }}AudioProcessor();
+    return new {{ cookiecutter.namespace }}::Processor::{{ cookiecutter.__project_pascal }}AudioProcessor();
 }

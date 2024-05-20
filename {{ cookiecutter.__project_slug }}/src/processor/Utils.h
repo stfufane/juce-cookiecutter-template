@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <cstring>
 
-namespace {{ cookiecutter.__namespace }}::Utils
+namespace {{ cookiecutter.namespace }}::Utils
 {
     inline void protectYourEars(float* buffer, int sampleCount)
     {

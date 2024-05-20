@@ -2,7 +2,7 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-namespace {{ cookiecutter.__namespace }}::Processor {
+namespace {{ cookiecutter.namespace }}::Processor {
 
 //==============================================================================
 class BaseProcessor : public juce::AudioProcessor
@@ -42,4 +42,4 @@ public:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BaseProcessor)
 };
 
-} // namespace {{ cookiecutter.__namespace }}::Processor
+} // namespace {{ cookiecutter.namespace }}::Processor
