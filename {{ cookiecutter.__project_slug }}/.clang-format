@@ -1,0 +1,15 @@
+---
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+IndentWidth: 4
+PointerAlignment: Left
+SpaceBeforeCpp11BracedList: true
+ColumnLimit: 0
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterNamespace: true
+    AfterFunction: true
+    AfterClass: true
+    AfterStruct: true
+    BeforeElse: false
+    BeforeWhile: false

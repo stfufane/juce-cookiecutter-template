@@ -4,6 +4,7 @@
 .vs/
 .DS_Store
 
+libs/
 build/
 out/
 gen/

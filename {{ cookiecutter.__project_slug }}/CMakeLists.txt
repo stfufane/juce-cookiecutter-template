@@ -26,11 +26,11 @@ option(JUCE_BUILD_EXAMPLES "Build JUCE Examples" OFF)
 set(JUCE_ENABLE_MODULE_SOURCE_GROUPS "Enable Module Source Groups" ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
 
-if (MSVC)
+if(MSVC)
     string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
     string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-endif ()
+endif()
 
 # Generate the ProjectInfo struct.
 set(PROJECT_COMPANY "{{ cookiecutter.author }}")
@@ -53,7 +53,7 @@ juce_add_plugin("${PROJECT_NAME}"
     PRODUCT_NAME "{{ cookiecutter.project_name }}")
 
 target_compile_features(${PROJECT_NAME}
-PUBLIC
+    PUBLIC
     cxx_std_17)
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -62,25 +62,25 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/processor/PluginProcessor.cpp
     src/processor/PluginProcessor.h
     src/processor/Params.h
-{%- if cookiecutter.include_ear_protection %}
+    {%- if cookiecutter.include_ear_protection %}
     src/processor/Utils.h
-{%- endif -%}
-{%- if cookiecutter.include_gui_example %}
+    {%- endif -%}
+    {%- if cookiecutter.include_gui_example %}
     src/gui/PluginEditor.cpp
     src/gui/PluginEditor.h
     src/gui/AttachedComponent.hpp
-{%- endif -%}
+    {%- endif -%}
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR})
 
-set (BinaryDataTarget "${PROJECT_NAME}-Data")
+set(BinaryDataTarget "${PROJECT_NAME}-Data")
 juce_add_binary_data(${BinaryDataTarget} SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/data/img/logo.png
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE ${DataTarget})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${BinaryDataTarget})
 
-target_include_directories(${PROJECT_NAME} PUBLIC 
+target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/gen)
 
@@ -94,18 +94,17 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        juce_dsp
-        juce_audio_utils
-        juce_gui_extra
+    juce_dsp
+    juce_audio_utils
+    juce_gui_extra
     PUBLIC
-        juce::juce_recommended_config_flags
-        juce::juce_recommended_lto_flags
-        juce::juce_recommended_warning_flags
+    juce::juce_recommended_config_flags
+    juce::juce_recommended_lto_flags
+    juce::juce_recommended_warning_flags
 )
 
-if (MSVC)
+if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /Wall /WX)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
-
