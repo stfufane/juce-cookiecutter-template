@@ -6,8 +6,11 @@ project({{ cookiecutter.__project_pascal }}
     LANGUAGES CXX C
 )
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+
+option(JUCE_BUILD_EXTRAS "Build JUCE Extras" ON)
+option(JUCE_BUILD_EXAMPLES "Build JUCE Examples" OFF)
 
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 include(get_cpm.cmake)
@@ -19,17 +22,14 @@ CPMAddPackage(
     SOURCE_DIR ${LIB_DIR}/juce
 )
 
-option(JUCE_BUILD_EXTRAS "Build JUCE Extras" ON)
-option(JUCE_BUILD_EXAMPLES "Build JUCE Examples" OFF)
-
 # Adds all the module sources so they appear correctly in the IDE
 set(JUCE_ENABLE_MODULE_SOURCE_GROUPS "Enable Module Source Groups" ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
 
 if(MSVC)
-    string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-    string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
 # Generate the ProjectInfo struct.
@@ -54,7 +54,7 @@ juce_add_plugin("${PROJECT_NAME}"
 
 target_compile_features(${PROJECT_NAME}
     PUBLIC
-    cxx_std_17)
+    cxx_std_20)
 
 target_sources(${PROJECT_NAME} PRIVATE
     src/processor/BaseProcessor.cpp
@@ -104,7 +104,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /Wall /WX)
+  target_compile_options(${PROJECT_NAME} PRIVATE /Wall /WX)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
