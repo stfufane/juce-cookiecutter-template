@@ -1,11 +1,10 @@
 #pragma once
 
-#include "juce_core/system/juce_PlatformDefs.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 
 namespace {{ cookiecutter.namespace }}::Processor {
 
-struct Params 
+struct Params
 {
     Params() = delete;
     explicit Params(juce::AudioProcessor& processor) {
@@ -23,8 +22,9 @@ struct Params
 };
 
 inline juce::String getParamID(juce::AudioProcessorParameter* param) {
-    if (auto paramWithID = dynamic_cast<juce::AudioProcessorParameterWithID*>(param))
+    if (auto paramWithID = dynamic_cast<juce::AudioProcessorParameterWithID*>(param)) {
         return paramWithID->paramID;
+    }
 
     return param->getName(50);
 }

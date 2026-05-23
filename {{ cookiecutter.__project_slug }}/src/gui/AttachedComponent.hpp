@@ -18,8 +18,8 @@ class AttachedComponent
 {
 public:
     template<typename... Args>
-    AttachedComponent<CompType, CompAttachment>(juce::RangedAudioParameter& param, juce::Component& parent,
-                                                std::function<void(CompType&)> init = nullptr, Args&&... args)
+    AttachedComponent(juce::RangedAudioParameter& param, juce::Component& parent,
+                      std::function<void(CompType&)> init = nullptr, Args&&... args)
     : component(std::forward<Args>(args)...),
       attachment(param, component)
     {

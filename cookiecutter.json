@@ -1,15 +1,15 @@
 {
-    "project_name": "Your Plugin Name",
-    "__project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
-    "__project_pascal": "{{ cookiecutter.project_name|title|replace(' ', '') }}",
-    "description": "Your Plugin Description",
-    "juce_branch": ["master", "develop", "juce8"],
-    "author": "Your Name",
-    "__bundle_id": "com.{{ cookiecutter.author|lower|replace(' ', '') }}.{{ cookiecutter.__project_slug }}",
-    "license": ["MIT", "ISC"],
-    "manufacturer_code": "MNFR",
-    "plugin_code": "PLGN",
-    "namespace": "{{ cookiecutter.author|title|replace(' ', '') }}",
-    "include_ear_protection": true,
-    "include_gui_example": true
+  "project_name": "Your Plugin Name",
+  "__project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+  "__project_pascal": "{{ cookiecutter.project_name|title|replace(' ', '') }}",
+  "description": "Your Plugin Description",
+  "juce_branch": ["master", "develop", "juce9"],
+  "author": "Your Name",
+  "__bundle_id": "com.{{ cookiecutter.author|lower|replace(' ', '') }}.{{ cookiecutter.__project_slug }}",
+  "license": ["MIT", "ISC"],
+  "manufacturer_code": "MNFR",
+  "plugin_code": "PLGN",
+  "namespace": "{{ cookiecutter.author|title|replace(' ', '') }}",
+  "include_ear_protection": true,
+  "include_gui_example": true
 }

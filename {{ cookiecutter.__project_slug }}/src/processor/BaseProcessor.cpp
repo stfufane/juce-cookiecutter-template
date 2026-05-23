@@ -1,14 +1,7 @@
 #include "BaseProcessor.h"
 #include "Params.h"
 
-namespace
-{
-{
-    cookiecutter.namespace
-}
-} // namespace
-::Processor
-{
+namespace {{ cookiecutter.namespace }}::Processor {
 
     //==============================================================================
     BaseProcessor::BaseProcessor()
